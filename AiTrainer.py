@@ -1,0 +1,57 @@
+import datetime
+from datetime import timedelta
+import cv2
+import numpy as np
+import PoseEstimationModule as pm
+import matplotlib.pyplot as plt
+
+
+plt.style.use('seaborn')
+
+cap = cv2.VideoCapture("squats.mp4")
+detector = pm.poseDetector()
+count = 0
+dir = 0
+tlist = []
+ylist = []
+
+
+while True:
+    success, img = cap.read()
+    if success:
+        img = detector.findPose(img, draw=False)
+        lmlist = detector.findPosition(img, draw=False)
+
+
+        if len(lmlist) != 0:
+            angle = detector.find_angle(img, 24, 26, 28)
+            per = np.interp(angle,(55, 180),(0, 100))
+
+            # Check for squats
+            if per >= 95:
+                if dir == 0:
+                    count += 0.5
+                    dir = 1
+
+            if per <= 7:
+                if dir == 1:
+                    count += 0.5
+                    dir = 0
+
+            ylist.append(int(per))
+            tlist.append(datetime.datetime.now())
+
+        cv2.putText(img, f'Reps: {str(int(count))}', (50, 100), cv2.FONT_HERSHEY_PLAIN, 5, (255, 0, 0), 5)
+    else:
+        plt.plot_date(tlist, ylist)
+        plt.title('Squat Range Of Motion / time')
+        plt.gcf().autofmt_xdate()
+        plt.show()
+        rep_time = max(tlist) - min(tlist)
+        print(f'Set length: {rep_time.seconds} seconds')
+        print(f'Average rep length: {round(rep_time.seconds/count, 2)} seconds')
+        break
+
+    cv2.imshow("Image", img)
+    cv2.waitKey(1)
+
