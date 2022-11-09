@@ -82,6 +82,11 @@ class poseDetector():
         #wait .3 seconds
         pass
 
+    def printResults(self, count, rep_time):
+        # print(f'Number of reps: {count} reps')
+        # print(f'Set length: {rep_time.seconds} seconds')
+        # print(f'Average rep length: {round(rep_time.seconds / count, 2)} seconds')
+        pass
 
 def main():
     cap = cv2.VideoCapture("squats.mp4")
