@@ -50,21 +50,15 @@ class Squat():
                     self.ylist.append(int(self.per))
                     self.tlist.append(datetime.datetime.now())
 
-                cv2.putText(img, f'Reps: {str(int(self.count))}', (50, 100), cv2.FONT_HERSHEY_PLAIN, 5, (255, 0, 0), 5)
+                cv2.putText(img, f'Reps: {str(int(self.count))}', (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 5)
             else:
-                plt.plot_date(self.tlist, self.ylist)
-                plt.title('Squat Range Of Motion / time')
-                plt.gcf().autofmt_xdate()
-                plt.show()
-                self.rep_time = max(self.tlist) - min(self.tlist)
-                print(f'Number of reps: {self.count} reps')
-                print(f'Set length: {self.rep_time.seconds} seconds')
-                print(f'Average rep length: {round(self.rep_time.seconds/self.count, 2)} seconds')
+                plot = pm.poseDetector.plotTimeSeries(self.tlist, self.ylist, 'Squat')
+                rep_time, set_length, av_rep_length = pm.poseDetector.printResults(self.count, self.tlist)
                 break
 
             cv2.imshow("Image", img)
             cv2.waitKey(1)
-        return self.count, self.rep_time
+        return self.count, rep_time, plot, set_length, av_rep_length
 
 
 def main():

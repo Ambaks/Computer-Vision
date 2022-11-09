@@ -76,17 +76,23 @@ class poseDetector():
             cv2.putText(img, str(int(angle)), (x2 - 70, y2 - 10), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 255))
         return angle
 
-    def plotTimeSeries(self):
-        #get y coordinates
-        # get time
-        #wait .3 seconds
+    def plotTimeSeries(x, y, exercise):
+        fig = plt.figure
+        plt.plot_date(x, y)
+        plt.title(f'{exercise} Range Of Motion / time')
+        plt.gcf().autofmt_xdate()
+        return fig
+
+    def printResults(count, tlist):
+        rep_time = max(tlist) - min(tlist)
+        print(f'Number of reps: {count} reps')
+        print(f'Set length: {rep_time.seconds} seconds')
+        print(f'Average rep length: {round(rep_time.seconds / count, 2)} seconds')
+        return rep_time, rep_time.seconds, round(rep_time.seconds / count, 2)
+
+    def findJointAngle(self):
         pass
 
-    def printResults(self, count, rep_time):
-        # print(f'Number of reps: {count} reps')
-        # print(f'Set length: {rep_time.seconds} seconds')
-        # print(f'Average rep length: {round(rep_time.seconds / count, 2)} seconds')
-        pass
 
 def main():
     cap = cv2.VideoCapture("squats.mp4")

@@ -1,4 +1,23 @@
 import squat_module as sm
+from matplotlib import pyplot as plt
+
+squat = sm.Squat()
+dataList = []
+
+dataList.append(squat.doSquat())
+print(dataList)
+plt.show()
 
 
-sm.squat('squats.mp4')
+
+
+
+
+
+# Greeting
+
+# Pick exercise
+    #Add data to database
+
+# Ask for another exercise
+
