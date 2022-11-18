@@ -3,19 +3,18 @@ import math
 
 import cv2
 import numpy as np
-import scipy.signal
 
 import PoseEstimationModule as pm
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks
 
 class Squat():
-    def __init__(self, tlist = [], ylist = [], dir = 0, count = -.5, detector = pm.poseDetector()):
-        self.ylist = ylist
-        self.tlist = tlist
-        self.dir = dir
-        self.count = count
-        self.detector = detector
+    def __init__(self):
+        self.ylist = []
+        self.tlist = []
+        self.dir = 0
+        self.count = -.5
+        self.detector = pm.poseDetector()
         self.rep_start = datetime.datetime.now()
         self.repTimes = []
         self.previous_count = -0.5
