@@ -1,11 +1,12 @@
 import squat_module as sm
 from matplotlib import pyplot as plt
 
+
 squat = sm.Squat()
 dataList = []
 
 dataList.append(squat.doSquat())
-print(dataList)
+# print(dataList)
 plt.show()
 
 
